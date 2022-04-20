@@ -55,18 +55,20 @@ int main(){
 	int sleep = 0;
 	while(1){
 
+
+
 		/* Check if button B is pressed;
 		 * turn on LED matrix if it is. */
-		if (GPIO0->IN & 1<<22) {
-			GPIO0->OUTSET = !0x2FFF7FF;
-			GPIO1->OUTSET = !(0x1 << 5);
+		if(!(GPIO0->IN & (1<<23))) {
+			GPIO0->OUT |= 0X01688000;
+			GPIO1->OUTCLR = 1<<5;
 		}
-
 
 		/* Check if button A is pressed;
 		 * turn off LED matrix if it is. */
-		if(GPIO0->IN & 1<<14) {
-			//GPIO0->OUTCLR 
+		if(!(GPIO0->IN & (1<<14))) {
+			GPIO0->OUT &= !0X01688000;
+			GPIO1->OUTSET = 1<<5;
 		}
 
 		sleep = 10000;
